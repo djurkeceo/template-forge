@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { ReactElement } from 'react';
 import { useDarkMode } from './hooks/useDarkMode';
+import { useLenis } from './hooks/useLenis';
+import { WaveDivider } from './components/Morph';
 import { Navbar } from './sections/Navbar';
 import { VariantBar } from './sections/VariantBar';
 import type { FeatureVariant, HeroVariant, PricingVariant } from './sections/VariantBar';
@@ -19,8 +21,10 @@ import { Footer } from './sections/Footer';
 
 // Demo shell: sticky nav, variant switcher, then every section in rhythm order.
 // Variant state lives here so buyers can see each layout swap without reloads.
+// Inertial momentum scrolling (Lenis) runs app-wide, disabled for reduced motion.
 export default function App(): ReactElement {
   const { dark, toggle } = useDarkMode();
+  useLenis();
   const [hero, setHero] = useState<HeroVariant>('split');
   const [features, setFeatures] = useState<FeatureVariant>('rows');
   const [pricing, setPricing] = useState<PricingVariant>('both');
@@ -49,7 +53,13 @@ export default function App(): ReactElement {
         {hero === 'split' ? <HeroSplit /> : <HeroCentered />}
         <ProofStrip />
         {features === 'rows' ? <FeaturesRows /> : <FeaturesGrid />}
-        {(pricing === 'calculator' || pricing === 'both') && <PricingCalculator />}
+        {(pricing === 'calculator' || pricing === 'both') && (
+          <>
+            {/* Fluid morphing divider melts the page into the dark pricing band. */}
+            <WaveDivider className="bg-paper text-ink dark:bg-ink-deep dark:text-white/5" />
+            <PricingCalculator />
+          </>
+        )}
         {(pricing === 'tiers' || pricing === 'both') && <PricingTiers />}
         <Testimonials />
         <Faq />

@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { useState, type FormEvent } from 'react';
 import { CheckCircle2, MailOpen, Send, XCircle } from 'lucide-react';
+import { Reveal } from '../components/Reveal';
 import { emailError, isValidEmail } from '../lib/validation';
 
 type Status = 'idle' | 'error' | 'success';
@@ -38,7 +39,7 @@ export function CtaCapture(): ReactElement {
 
   return (
     <section id="cta" aria-labelledby="cta-title" className="mx-auto max-w-6xl scroll-mt-20 px-5 pb-20">
-      <div className="relative overflow-hidden rounded-panel bg-verdant px-6 py-12 text-white sm:px-12 dark:bg-ink-surface dark:ring-1 dark:ring-white/10">
+      <Reveal className="relative overflow-hidden rounded-panel bg-verdant px-6 py-12 text-white sm:px-12 dark:bg-ink-surface dark:ring-1 dark:ring-white/10">
         {/* Abstract arcs backdrop — CSS only. */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full border-[28px] border-white/10" />
@@ -125,7 +126,7 @@ export function CtaCapture(): ReactElement {
             )}
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

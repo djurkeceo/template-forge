@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { BellRing, CalendarClock, CreditCard, Repeat, Split, Wallet } from 'lucide-react';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 
 const ROWS = [
@@ -45,11 +46,13 @@ export function FeaturesRows(): ReactElement {
       />
       <div className="mt-10 flex flex-col gap-6">
         {ROWS.map((row, i) => (
-          <article
+          <Reveal
             key={row.title}
-            className={`grid gap-5 rounded-panel border border-line bg-white p-6 shadow-card sm:p-8 lg:grid-cols-[auto_1fr_auto] lg:items-center dark:border-white/10 dark:bg-ink-surface ${
-              i % 2 === 1 ? 'lg:ml-16 border-l-8' : 'lg:mr-16 border-l-8'
-            } ${row.accent}`}
+            delay={i * 0.08}
+            className={i % 2 === 1 ? 'lg:ml-16' : 'lg:mr-16'}
+          >
+          <article
+            className={`grid gap-5 rounded-panel border border-line bg-white p-6 shadow-card sm:p-8 lg:grid-cols-[auto_1fr_auto] lg:items-center dark:border-white/10 dark:bg-ink-surface border-l-8 ${row.accent}`}
           >
             <span className="grid h-12 w-12 place-items-center rounded-ticket bg-ink text-marigold dark:bg-marigold dark:text-ink">
               <row.icon size={22} aria-hidden="true" />
@@ -63,19 +66,22 @@ export function FeaturesRows(): ReactElement {
               <p className="text-xs font-medium text-fog dark:text-gray-400">{row.stat[1]}</p>
             </div>
           </article>
+          </Reveal>
         ))}
       </div>
 
       <ul className="mt-6 grid gap-4 sm:grid-cols-3">
-        {SECONDARY.map((s) => (
-          <li
+        {SECONDARY.map((s, i) => (
+          <Reveal
+            as="li"
             key={s.title}
+            delay={i * 0.08}
             className="rounded-ticket bg-ink px-5 py-4 text-white transition-transform hover:-translate-y-0.5 dark:bg-white/5 dark:ring-1 dark:ring-white/10"
           >
             <s.icon size={20} className="text-marigold" aria-hidden="true" />
             <p className="mt-2 text-sm font-bold">{s.title}</p>
             <p className="text-[13px] text-white/70 dark:text-gray-300">{s.body}</p>
-          </li>
+          </Reveal>
         ))}
       </ul>
     </section>

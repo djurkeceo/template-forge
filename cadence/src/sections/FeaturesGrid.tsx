@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { BellRing, CalendarClock, CreditCard, Repeat, Split, Users } from 'lucide-react';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 
 const CARDS = [
@@ -23,15 +24,18 @@ export function FeaturesGrid(): ReactElement {
         align="center"
       />
       <ul className="mt-10 grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2 lg:grid-cols-3 dark:border-white/10 dark:bg-white/10">
-        {CARDS.map((c) => (
-          <li
+        {CARDS.map((c, i) => (
+          <Reveal
+            as="li"
             key={c.title}
+            delay={(i % 3) * 0.08}
+            distance={20}
             className="bg-white p-6 transition-colors hover:bg-paper dark:bg-ink-surface dark:hover:bg-white/5"
           >
             <c.icon size={22} className="text-verdant dark:text-marigold" aria-hidden="true" />
             <h3 className="font-display mt-3 text-base font-bold text-ink dark:text-white">{c.title}</h3>
             <p className="mt-1 text-sm text-fog dark:text-gray-300">{c.body}</p>
-          </li>
+          </Reveal>
         ))}
       </ul>
     </section>

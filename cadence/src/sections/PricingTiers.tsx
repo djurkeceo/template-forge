@@ -1,6 +1,8 @@
 import type { ReactElement } from 'react';
 import { Check } from 'lucide-react';
 import { Button } from '../components/Button';
+import { Magnetic } from '../components/Magnetic';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { PLANS, formatUSD } from '../lib/pricing';
 
@@ -25,8 +27,10 @@ export function PricingTiers(): ReactElement {
         {PLANS.map((p, i) => {
           const featured = p.id === 'studio';
           return (
-            <li
+            <Reveal
+              as="li"
               key={p.id}
+              delay={i * 0.1}
               className={`flex flex-col rounded-panel p-7 ${
                 featured
                   ? 'border-2 border-ink bg-ink text-white shadow-stamp lg:-my-3 lg:py-10 dark:border-marigold dark:bg-ink-surface'
@@ -57,15 +61,17 @@ export function PricingTiers(): ReactElement {
                 ))}
               </ul>
               <div className="mt-6 flex-1" />
-              <Button
-                href="#cta"
-                variant={featured ? 'primary' : 'secondary'}
-                size="md"
-                aria-label={`${p.cta} on the ${p.name} plan`}
-              >
-                {i === 2 ? 'Talk to us' : p.cta}
-              </Button>
-            </li>
+              <Magnetic strength={0.18} className="flex [&>a]:flex-1">
+                <Button
+                  href="#cta"
+                  variant={featured ? 'primary' : 'secondary'}
+                  size="md"
+                  aria-label={`${p.cta} on the ${p.name} plan`}
+                >
+                  {i === 2 ? 'Talk to us' : p.cta}
+                </Button>
+              </Magnetic>
+            </Reveal>
           );
         })}
       </ul>

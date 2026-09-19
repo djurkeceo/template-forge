@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { Reveal } from '../components/Reveal';
 import { PROOF_STUDIOS } from '../lib/content';
 
 // Proof strip: invented studios only, each with one concrete outcome.
@@ -16,9 +17,12 @@ export function ProofStrip(): ReactElement {
           </p>
         </div>
         <ul className="grid gap-3 sm:grid-cols-2">
-          {PROOF_STUDIOS.map((s) => (
-            <li
+          {PROOF_STUDIOS.map((s, i) => (
+            <Reveal
+              as="li"
               key={s.name}
+              delay={(i % 2) * 0.08}
+              distance={18}
               className="rounded-ticket border border-line bg-paper px-4 py-3 transition-transform hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
             >
               <p className="text-sm font-bold text-ink dark:text-white">{s.name}</p>
@@ -26,7 +30,7 @@ export function ProofStrip(): ReactElement {
               <p className="mt-1.5 inline-block rounded-full bg-verdant-tint px-2 py-0.5 text-[11px] font-bold text-verdant-deep dark:bg-verdant/25 dark:text-marigold-soft">
                 {s.stat}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

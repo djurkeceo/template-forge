@@ -2,13 +2,17 @@ import type { ReactElement } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Play, ShieldCheck, Star } from 'lucide-react';
 import { Button } from '../components/Button';
+import { Magnetic } from '../components/Magnetic';
+import { SplitText } from '../components/SplitText';
+import { MorphBlob } from '../components/Morph';
 import { ScheduleMock } from './ScheduleMock';
 
 // Variant A — "Week view": asymmetric editorial split.
-// Left column carries the argument; right column shows the live-feeling
-// schedule board with a rotated marigold note pinned on top.
-// This is the ONE orchestrated page-load moment: a short stagger here,
-// hover/tap feedback everywhere else.
+// Left column carries the argument with a split-text character stagger;
+// right column shows the live-feeling schedule board with a rotated
+// marigold note pinned on top. CTAs are magnetic on fine pointers.
+// This stays the ONE orchestrated page-load moment: everything below the
+// fold reveals cinematically on scroll instead.
 export function HeroSplit(): ReactElement {
   const reduce = useReducedMotion();
   const instant = reduce === true;
@@ -21,9 +25,9 @@ export function HeroSplit(): ReactElement {
 
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden">
-      {/* Abstract backdrop: two soft radial washes, no photos. */}
+      {/* Abstract backdrop: fluid morphing blob + soft radial washes, no photos. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-10 h-96 w-96 rounded-full bg-verdant-tint blur-3xl dark:bg-verdant/20" />
+        <MorphBlob className="absolute -left-40 top-0 h-[28rem] w-[28rem] bg-verdant-tint blur-3xl dark:bg-verdant/20" />
         <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-marigold-soft blur-3xl dark:bg-marigold/10" />
       </div>
 
@@ -37,32 +41,35 @@ export function HeroSplit(): ReactElement {
             Loved by 1,400 independent studios
           </motion.p>
 
-          <motion.h1
-            {...rise(0.08)}
+          <h1
             id="hero-title"
             className="font-display mt-5 text-4xl font-bold leading-[1.02] text-ink sm:text-5xl lg:text-[3.6rem] dark:text-white"
           >
-            The week runs itself, you teach the class.
-          </motion.h1>
+            <SplitText text="The week runs itself, you teach the class." delay={0.1} />
+          </h1>
 
-          <motion.p {...rise(0.16)} className="mt-5 max-w-lg text-lg leading-relaxed text-fog dark:text-gray-300">
+          <motion.p {...rise(0.5)} className="mt-5 max-w-lg text-lg leading-relaxed text-fog dark:text-gray-300">
             Cadence handles bookings, waitlists, memberships and payouts for swim schools,
             climbing gyms, salons and tutoring rooms — from one timetable your whole
             team can actually read.
           </motion.p>
 
-          <motion.div {...rise(0.24)} className="mt-8 flex flex-wrap items-center gap-4">
-            <Button href="#pricing" size="lg">
-              Price your studio
-              <ArrowRight size={18} aria-hidden="true" />
-            </Button>
-            <Button href="#features" size="lg" variant="secondary">
-              <Play size={17} aria-hidden="true" />
-              Watch a week in 2 min
-            </Button>
+          <motion.div {...rise(0.58)} className="mt-8 flex flex-wrap items-center gap-4">
+            <Magnetic>
+              <Button href="#pricing" size="lg">
+                Price your studio
+                <ArrowRight size={18} aria-hidden="true" />
+              </Button>
+            </Magnetic>
+            <Magnetic strength={0.22}>
+              <Button href="#features" size="lg" variant="secondary">
+                <Play size={17} aria-hidden="true" />
+                Watch a week in 2 min
+              </Button>
+            </Magnetic>
           </motion.div>
 
-          <motion.div {...rise(0.32)} className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <motion.div {...rise(0.66)} className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
             <p className="flex items-center gap-2 text-sm font-medium text-fog dark:text-gray-300">
               <ShieldCheck size={16} className="text-verdant" aria-hidden="true" />
               Free timetable import
@@ -77,7 +84,7 @@ export function HeroSplit(): ReactElement {
         <motion.div
           initial={instant ? false : { opacity: 0, y: 24, rotate: 0.5 }}
           animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={instant ? { duration: 0 } : { duration: 0.65, delay: 0.2, ease: 'easeOut' }}
+          transition={instant ? { duration: 0 } : { duration: 0.65, delay: 0.35, ease: 'easeOut' }}
           className="relative"
         >
           {/* Pinned note: rotated ticket overlapping the board's corner. */}

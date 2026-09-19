@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { Quote } from 'lucide-react';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { TESTIMONIALS } from '../lib/content';
 
@@ -32,7 +33,7 @@ export function Testimonials(): ReactElement {
 
         <ul className="flex flex-col gap-5">
           {TESTIMONIALS.map((t, i) => (
-            <li key={t.name}>
+            <Reveal as="li" key={t.name} delay={i * 0.1}>
               <figure
                 className={`rounded-panel border border-line p-6 shadow-card sm:p-7 dark:border-white/10 dark:bg-ink-surface ${
                   i === 1 ? 'bg-ink text-white sm:ml-10' : 'bg-paper sm:mr-10 dark:bg-ink-surface dark:text-white'
@@ -55,7 +56,7 @@ export function Testimonials(): ReactElement {
                   </span>
                 </figcaption>
               </figure>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

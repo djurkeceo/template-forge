@@ -12,8 +12,22 @@
   color-scheme: light dark;
 }
 
+/* Lenis owns scroll smoothing (see useLenis); keep native behavior here so
+   the two never fight. Anchor offset is handled by scroll-mt-* utilities. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+/* Minimal Lenis recommended styles (mirrors lenis/dist/lenis.css core). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
