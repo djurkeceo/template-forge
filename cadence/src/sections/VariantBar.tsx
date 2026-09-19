@@ -50,8 +50,9 @@ function Group<T extends string>(props: {
 // Demo-only switcher: lets a buyer preview alternate layouts live.
 // Anchored under the nav so it never covers content; sticky off on mobile.
 export function VariantBar({ hero, features, pricing, onHero, onFeatures, onPricing }: VariantBarProps): ReactElement {
+  // Solid background: translucent + backdrop-blur repaints every scroll frame.
   return (
-    <div id="variants" className="border-b border-line bg-white/80 backdrop-blur dark:border-white/10 dark:bg-ink-deep/80">
+    <div id="variants" className="border-b border-line bg-white dark:border-white/10 dark:bg-ink-deep">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-3 lg:flex-row lg:items-center lg:gap-8">
         <p className="flex items-center gap-2 text-[13px] font-bold text-ink dark:text-white">
           <LayoutTemplate size={15} aria-hidden="true" className="text-verdant dark:text-marigold" />

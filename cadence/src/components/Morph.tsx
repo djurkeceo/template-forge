@@ -1,5 +1,5 @@
-import type { ReactElement } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { useRef, type ReactElement } from 'react';
+import { motion, useInView, useReducedMotion } from 'motion/react';
 
 interface MorphBlobProps {
   className?: string;
@@ -18,7 +18,9 @@ export function MorphBlob({ className }: MorphBlobProps): ReactElement {
   return (
     <motion.div
       aria-hidden="true"
-      className={className}
+      // will-change-transform promotes the blob to its own GPU layer so the
+      // 18s morph loop doesn't repaint the page behind it every frame.
+      className={`${className ?? ''} will-change-transform`}
       animate={{
         borderRadius: [
           '42% 58% 61% 39% / 45% 43% 57% 55%',
@@ -41,14 +43,18 @@ interface WaveDividerProps {
 
 // Fluid SVG morphing divider: the wave path breathes between two shapes
 // (identical command structure, so Motion can interpolate `d`) on a slow
-// mirror loop. Place between two contrasting bands.
+// mirror loop. The loop only runs while the divider is on screen — SVG path
+// interpolation is CPU-painted every frame, so running it offscreen would
+// tax the whole page scroll for nothing. Place between contrasting bands.
 export function WaveDivider({ className }: WaveDividerProps): ReactElement {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: '-40px' });
   const from = 'M0,64 C240,96 480,32 720,64 C960,96 1200,32 1440,64 L1440,121 L0,121 Z';
   const to = 'M0,64 C240,40 480,96 720,56 C960,32 1200,88 1440,48 L1440,121 L0,121 Z';
 
   return (
-    <div aria-hidden="true" className={className}>
+    <div ref={ref} aria-hidden="true" className={className}>
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="block h-14 w-full sm:h-20">
         {reduce === true ? (
           <path d={from} fill="currentColor" />
@@ -56,7 +62,8 @@ export function WaveDivider({ className }: WaveDividerProps): ReactElement {
           <motion.path
             fill="currentColor"
             initial={{ d: from }}
-            animate={{ d: [from, to, from] }}
+            // Offscreen: settle to the static shape so the infinite loop stops.
+            animate={inView ? { d: [from, to, from] } : { d: from }}
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           />
         )}

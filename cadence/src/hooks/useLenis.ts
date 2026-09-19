@@ -12,7 +12,10 @@ export function useLenis(): void {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true, autoRaf: true });
+    // lerp 0.1 tracks the wheel closely without floaty lag; anchor jumps get
+    // an explicit expo-out glide so long trips (hero → pricing) feel
+    // deliberate instead of sluggish.
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, autoRaf: true });
 
     const onClick = (event: MouseEvent): void => {
       const target = event.target as HTMLElement | null;
@@ -23,7 +26,11 @@ export function useLenis(): void {
       const el = document.querySelector(hash);
       if (el === null) return;
       event.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -72 });
+      lenis.scrollTo(el as HTMLElement, {
+        offset: -80,
+        duration: 1.4,
+        easing: (t: number) => 1 - Math.pow(1 - t, 4),
+      });
       window.history.replaceState(null, '', hash);
     };
 

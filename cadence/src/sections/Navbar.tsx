@@ -20,8 +20,10 @@ const LINKS: Array<{ label: string; href: string }> = [
 export function Navbar({ dark, onToggleDark }: NavbarProps): ReactElement {
   const [open, setOpen] = useState(false);
 
+  // Solid header background on purpose: backdrop-blur on a sticky bar forces
+  // the browser to re-blur the backdrop on every scroll frame (scroll jank).
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur dark:border-white/10 dark:bg-ink-deep/90">
+    <header className="sticky top-0 z-40 border-b border-line bg-paper dark:border-white/10 dark:bg-ink-deep">
       <nav aria-label="Primary" className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a href="#top" className="flex items-center gap-2.5">
           <span className="grid h-9 w-9 place-items-center rounded-lg bg-ink text-marigold dark:bg-marigold dark:text-ink">

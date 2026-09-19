@@ -12,8 +12,10 @@ interface RevealProps {
   as?: 'div' | 'li';
 }
 
-// Cinematic scroll reveal: the element rises softly while de-blurring and
-// settling from 98.5% scale — the "focus pull" feel. Fires once per element.
+// Cinematic scroll reveal: the element rises softly and settles from 98.5%
+// scale — the "focus pull" feel, without blur. (Blur was removed deliberately:
+// animating filter forces a repaint on every scroll frame and was the main
+// source of scroll jank.) Fires once per element.
 // Reduced-motion users get the final state with no animation.
 export function Reveal({ children, delay = 0, distance = 28, className, as = 'div' }: RevealProps): ReactElement {
   const reduce = useReducedMotion();
@@ -25,8 +27,8 @@ export function Reveal({ children, delay = 0, distance = 28, className, as = 'di
 
   const shared = {
     className,
-    initial: { opacity: 0, y: distance, scale: 0.985, filter: 'blur(6px)' },
-    whileInView: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
+    initial: { opacity: 0, y: distance, scale: 0.985 },
+    whileInView: { opacity: 1, y: 0, scale: 1 },
     viewport: { once: true, margin: '-72px' },
     transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
   };
