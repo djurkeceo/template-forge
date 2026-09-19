@@ -2,7 +2,6 @@ import type { ReactElement } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Play, ShieldCheck, Star } from 'lucide-react';
 import { Button } from '../components/Button';
-import { Magnetic } from '../components/Magnetic';
 import { SplitText } from '../components/SplitText';
 import { MorphBlob } from '../components/Morph';
 import { ScheduleMock } from './ScheduleMock';
@@ -10,7 +9,7 @@ import { ScheduleMock } from './ScheduleMock';
 // Variant A — "Week view": asymmetric editorial split.
 // Left column carries the argument with a split-text character stagger;
 // right column shows the live-feeling schedule board with a rotated
-// marigold note pinned on top. CTAs are magnetic on fine pointers.
+// marigold note pinned on top.
 // This stays the ONE orchestrated page-load moment: everything below the
 // fold reveals cinematically on scroll instead.
 export function HeroSplit(): ReactElement {
@@ -55,18 +54,14 @@ export function HeroSplit(): ReactElement {
           </motion.p>
 
           <motion.div {...rise(0.58)} className="mt-8 flex flex-wrap items-center gap-4">
-            <Magnetic>
-              <Button href="#pricing" size="lg">
-                Price your studio
-                <ArrowRight size={18} aria-hidden="true" />
-              </Button>
-            </Magnetic>
-            <Magnetic strength={0.22}>
-              <Button href="#features" size="lg" variant="secondary">
-                <Play size={17} aria-hidden="true" />
-                Watch a week in 2 min
-              </Button>
-            </Magnetic>
+            <Button href="#pricing" size="lg">
+              Price your studio
+              <ArrowRight size={18} aria-hidden="true" />
+            </Button>
+            <Button href="#features" size="lg" variant="secondary">
+              <Play size={17} aria-hidden="true" />
+              Watch a week in 2 min
+            </Button>
           </motion.div>
 
           <motion.div {...rise(0.66)} className="mt-8 flex flex-wrap gap-x-8 gap-y-3">

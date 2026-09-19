@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
 import { ArrowRight, CalendarDays, CreditCard, Users } from 'lucide-react';
 import { Button } from '../components/Button';
-import { Magnetic } from '../components/Magnetic';
 import { MorphBlob } from '../components/Morph';
 import { SplitText } from '../components/SplitText';
 
@@ -29,17 +28,13 @@ export function HeroCentered(): ReactElement {
           Friday. Built for the way small studios really run.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Magnetic>
-            <Button href="#pricing" size="lg">
-              Price your studio
-              <ArrowRight size={18} aria-hidden="true" />
-            </Button>
-          </Magnetic>
-          <Magnetic strength={0.22}>
-            <Button href="#stories" size="lg" variant="secondary">
-              Meet the studios
-            </Button>
-          </Magnetic>
+          <Button href="#pricing" size="lg">
+            Price your studio
+            <ArrowRight size={18} aria-hidden="true" />
+          </Button>
+          <Button href="#stories" size="lg" variant="secondary">
+            Meet the studios
+          </Button>
         </div>
 
         {/* Perforated ticket strip — dashed dividers, three mini outcomes. */}

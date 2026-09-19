@@ -11,9 +11,9 @@ and get a validated trial invite in one interaction.
 - **It demos like a product, not a picture.** The pricing quote recalculates
   live from plan, bookings, locations and billing period. Prospects play with
   it — and convince themselves.
-- **Premium motion, done tastefully.** Cinematic scroll reveals, magnetic
-  buttons, split-text headlines, a fluid morphing hero backdrop, a breathing
-  SVG wave into pricing, and inertial momentum scrolling. All gated behind
+- **Premium motion, done tastefully.** Cinematic scroll reveals, split-text
+  headlines, a fluid morphing hero backdrop, a breathing SVG wave into
+  pricing, and inertial momentum scrolling. All gated behind
   `prefers-reduced-motion`.
 - **Layout variants included.** Two heroes, two feature layouts, three pricing
   presentations — switch them live in the demo bar, ship the combo you like.
@@ -42,8 +42,6 @@ and get a validated trial invite in one interaction.
 
 - **Cinematic scroll reveal** (`src/components/Reveal.tsx`) — rise + de-blur +
   settle, once per element, staggered across cards.
-- **Magnetic cursor** (`src/components/Magnetic.tsx`) — CTAs lean toward the
-  pointer and spring back. Fine pointers only.
 - **Split-text stagger** (`src/components/SplitText.tsx`) — headlines build
   character by character; screen readers hear the full line once.
 - **Fluid morphing** (`src/components/Morph.tsx`) — breathing hero blob plus
@@ -76,7 +74,7 @@ Node 18+. No backend, no env vars, no tracking.
 | Plans, overages, annual discount | `src/lib/pricing.ts` — calculator and cards share this model |
 | Studio names, quotes, FAQs | `src/lib/content.ts` — one file, all fictional |
 | Pick your layouts | `src/App.tsx` variant state, or delete the variants you don't ship |
-| Tune the motion | `Reveal` (delay/distance), `Magnetic` (strength), `useLenis` (lerp) |
+| Tune the motion | `Reveal` (delay/distance), `useLenis` (lerp) |
 
 Dark mode is class-based: the moon button toggles `.dark` on `<html>` and
 persists to `localStorage`. Every section ships `dark:` styles.

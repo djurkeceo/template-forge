@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
 import { Check } from 'lucide-react';
 import { Button } from '../components/Button';
-import { Magnetic } from '../components/Magnetic';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { PLANS, formatUSD } from '../lib/pricing';
@@ -61,16 +60,14 @@ export function PricingTiers(): ReactElement {
                 ))}
               </ul>
               <div className="mt-6 flex-1" />
-              <Magnetic strength={0.18} className="flex [&>a]:flex-1">
-                <Button
-                  href="#cta"
-                  variant={featured ? 'primary' : 'secondary'}
-                  size="md"
-                  aria-label={`${p.cta} on the ${p.name} plan`}
-                >
-                  {i === 2 ? 'Talk to us' : p.cta}
-                </Button>
-              </Magnetic>
+              <Button
+                href="#cta"
+                variant={featured ? 'primary' : 'secondary'}
+                size="md"
+                aria-label={`${p.cta} on the ${p.name} plan`}
+              >
+                {i === 2 ? 'Talk to us' : p.cta}
+              </Button>
             </Reveal>
           );
         })}

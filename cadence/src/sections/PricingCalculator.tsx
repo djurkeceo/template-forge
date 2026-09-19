@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
 import { useMemo, useState } from 'react';
 import { Building2, CalendarCheck, Info } from 'lucide-react';
-import { Magnetic } from '../components/Magnetic';
 import { Toggle } from '../components/Toggle';
 import {
   MAX_BOOKINGS,
@@ -193,14 +192,12 @@ export function PricingCalculator(): ReactElement {
               )}
             </dl>
 
-            <Magnetic strength={0.18} className="mt-6 flex [&>a]:flex-1">
-              <a
-                href="#cta"
-                className="flex items-center justify-center rounded-ticket border-2 border-ink bg-ink px-5 py-3 text-sm font-bold text-white shadow-stamp transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#0E7C5A]"
-              >
-                Start 21 days free
-              </a>
-            </Magnetic>
+            <a
+              href="#cta"
+              className="mt-6 flex items-center justify-center rounded-ticket border-2 border-ink bg-ink px-5 py-3 text-sm font-bold text-white shadow-stamp transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#0E7C5A]"
+            >
+              Start 21 days free
+            </a>
             <p className="mt-3 flex items-start gap-1.5 text-xs leading-relaxed text-fog">
               <Info size={13} className="mt-0.5 shrink-0" aria-hidden="true" />
               Quote updates live as you adjust. Overage is ${result.plan.overagePerBooking.toFixed(2)} per
