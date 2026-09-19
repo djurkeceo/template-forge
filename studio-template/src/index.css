@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Cadence template — global layer.
+  Palette lives in tailwind.config.js; this file only holds what
+  utilities can't express: focus rings, slider styling, motion guards.
+*/
+
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.dark body,
+.dark {
+  background-color: #0b1b31;
+}
+
+/* Visible keyboard focus everywhere — buyers audit this. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid #e8b44a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: #f7e3b0;
+}
+
+/* Display headlines use the timetable-like face. */
+.font-display {
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: #e8b44a;
+  color: #102542;
+}
+
+/* Custom range slider for the pricing calculator. */
+input[type='range'].cadence-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #0e7c5a var(--fill, 50%), #d8e0d6 var(--fill, 50%));
+  outline-offset: 4px;
+}
+.dark input[type='range'].cadence-range {
+  background: linear-gradient(to right, #e8b44a var(--fill, 50%), #2a4368 var(--fill, 50%));
+}
+input[type='range'].cadence-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #102542;
+  border: 3px solid #eff2eb;
+  box-shadow: 0 0 0 1.5px #102542;
+  cursor: pointer;
+}
+.dark input[type='range'].cadence-range::-webkit-slider-thumb {
+  background: #e8b44a;
+  border-color: #0b1b31;
+  box-shadow: 0 0 0 1.5px #e8b44a;
+}
+input[type='range'].cadence-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #102542;
+  border: 3px solid #eff2eb;
+  box-shadow: 0 0 0 1.5px #102542;
+  cursor: pointer;
+}
+
+/* One global reduced-motion guard as a backstop.
+   Components also check useReducedMotion() before animating. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
