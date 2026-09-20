@@ -34,11 +34,14 @@ interface OsState {
 export type { OsState, OsAction };
 
 type OsAction =
-  | { type: 'open'; app: AppId }
+  // `x`/`y` is an explicit origin (e.g. beside the app's icon). When
+  // omitted, fresh windows fall back to the top-left cascade. Restores
+  // (existing windows) always keep their current geometry.
+  | { type: 'open'; app: AppId; x?: number; y?: number }
   | { type: 'close'; app: AppId }
   | { type: 'minimize'; app: AppId }
   | { type: 'focus'; app: AppId }
-  | { type: 'toggle'; app: AppId }
+  | { type: 'toggle'; app: AppId; x?: number; y?: number }
   | { type: 'accent'; accent: OsState['accent'] }
   | { type: 'desk'; desk: OsState['desk'] };
 
@@ -46,6 +49,11 @@ const CASCADE = 44;
 
 function cascadeSpot(openCount: number): { x: number; y: number } {
   return { x: 90 + (openCount % 5) * CASCADE, y: 64 + (openCount % 5) * CASCADE };
+}
+
+function freshSpot(action: { x?: number; y?: number }, openCount: number): { x: number; y: number } {
+  if (action.x !== undefined && action.y !== undefined) return { x: action.x, y: action.y };
+  return cascadeSpot(openCount);
 }
 
 function bringToFront(order: WinState[], app: AppId): WinState[] {
@@ -59,7 +67,7 @@ function reducer(state: OsState, action: OsAction): OsState {
     case 'open': {
       const existing = state.order.find((w) => w.app === action.app);
       if (existing !== undefined) return { ...state, order: bringToFront(state.order, action.app), top: state.top + 1 };
-      const spot = cascadeSpot(state.order.length);
+        const spot = freshSpot(action, state.order.length);
       const win: WinState = { app: action.app, minimized: false, x: spot.x, y: spot.y, w: 560, h: 430 };
       return { ...state, order: [...state.order, win], top: state.top + 1 };
     }
@@ -68,7 +76,7 @@ function reducer(state: OsState, action: OsAction): OsState {
       // focused → minimize; background → focus.
       const existing = state.order.find((w) => w.app === action.app);
       if (existing === undefined) {
-        const spot = cascadeSpot(state.order.length);
+      const spot = freshSpot(action, state.order.length);
         return { ...state, order: [...state.order, { app: action.app, minimized: false, x: spot.x, y: spot.y, w: 560, h: 430 }], top: state.top + 1 };
       }
       const isTop = state.order[state.order.length - 1]?.app === action.app && !existing.minimized;

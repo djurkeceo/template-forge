@@ -24,7 +24,7 @@ gracefully becomes a launchpad with full-screen app sheets.
 |---|---|
 | Menu bar | Nook mark, focused-app name, invented status icons, live mono clock |
 | Desktop icons | Draggable paper tiles (react-rnd), tactile press, keyboard openable |
-| Windows | Drag-by-title-bar, corner resize, spring open/close, focus chrome, Escape closes |
+| Windows | Drag-by-title-bar, corner resize, spring open/close beside their icon, focus chrome, Escape closes |
 | Dock | Quick-launch all apps; open/minimized/focused states with labels |
 | Fieldnotes | About card, initial-tile avatar (no photo rights), skills, facts |
 | Waypoints | Project shelf with working tag filter + live counts |

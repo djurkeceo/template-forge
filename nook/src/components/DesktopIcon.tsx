@@ -1,6 +1,7 @@
-import { useState, type ReactElement } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { Rnd } from 'react-rnd';
 import { appMeta, type AppId } from '../lib/apps';
+import { setIconSpot, windowSpotFor } from '../lib/iconSpots';
 import { useOs } from '../lib/useOs';
 
 interface DesktopIconProps {
@@ -18,6 +19,12 @@ export function DesktopIcon({ app, defaultX, defaultY }: DesktopIconProps): Reac
   const [pos, setPos] = useState({ x: defaultX, y: defaultY });
   const meta = appMeta(app);
 
+  // Publish the tile's spot so windows (and the dock) can open beside it.
+  // Runs on mount and after every drag — never during render of siblings.
+  useEffect(() => {
+    setIconSpot(app, pos);
+  }, [app, pos]);
+
   const activeRing = accent === 'marigold' ? 'group-focus-visible:outline-marigold' : 'group-focus-visible:outline-lagoon';
 
   return (
@@ -31,7 +38,7 @@ export function DesktopIcon({ app, defaultX, defaultY }: DesktopIconProps): Reac
     >
       <button
         type="button"
-        onClick={() => dispatch({ type: 'open', app })}
+        onClick={() => dispatch({ type: 'open', app, ...windowSpotFor(pos.x, pos.y) })}
         aria-label={`Open ${meta.name}, ${meta.tagline}`}
         className={`group flex w-24 flex-col items-center gap-1.5 ${activeRing}`}
       >

@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { APPS, DESK_TINTS, type AppId } from '../lib/apps';
+import { getIconSpot, windowSpotFor } from '../lib/iconSpots';
 import { useOs } from '../lib/useOs';
 import { DesktopIcon } from './DesktopIcon';
 import { Dock } from './Dock';
@@ -62,6 +63,11 @@ export function Desktop(): ReactElement {
 
 function WelcomeNote(): ReactElement {
   const { dispatch } = useOs();
+  function openWaypoints(): void {
+    // Same beside-the-icon origin as the tiles themselves.
+    const spot = getIconSpot('waypoints');
+    dispatch({ type: 'open', app: 'waypoints', ...(spot === undefined ? {} : windowSpotFor(spot.x, spot.y)) });
+  }
   return (
     <aside aria-label="Getting started" className="absolute bottom-24 left-5 z-[5] max-w-60 rounded-card border-2 border-ink bg-paper p-4 shadow-card">
       <p className="font-display text-base font-bold text-ink">Pull up a chair.</p>
@@ -69,7 +75,7 @@ function WelcomeNote(): ReactElement {
         Drag the tiles, double-tap nothing — one click opens an app. Start with{' '}
         <button
           type="button"
-          onClick={() => dispatch({ type: 'open', app: 'waypoints' })}
+          onClick={openWaypoints}
           className="font-bold text-lagoon underline underline-offset-2"
         >
           Waypoints

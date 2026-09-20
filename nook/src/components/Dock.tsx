@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { APPS, type AppId } from '../lib/apps';
+import { getIconSpot, windowSpotFor } from '../lib/iconSpots';
 import { useOs } from '../lib/useOs';
 
 // Floating tray: quick-launch for every app + running indicators.
@@ -25,7 +26,12 @@ export function Dock(): ReactElement {
             <li key={meta.id} className="flex flex-col items-center gap-1">
               <button
                 type="button"
-                onClick={() => dispatch({ type: 'toggle', app: meta.id })}
+                onClick={() => {
+                  // Fresh windows open beside their desktop tile; restores
+                  // and minimizes ignore the spot and keep window geometry.
+                  const spot = getIconSpot(meta.id);
+                  dispatch({ type: 'toggle', app: meta.id, ...(spot === undefined ? {} : windowSpotFor(spot.x, spot.y)) });
+                }}
                 aria-label={
                   st === 'closed'
                     ? `Open ${meta.name}`
