@@ -104,11 +104,13 @@ export const useShop = create<ShopState>()(
   ),
 );
 
-/** Catalog-joined lines; drops rows whose product vanished (safe CMS swaps).
- *  IMPORTANT: this builds a fresh array on every call, so subscribers MUST
- *  read it via `useShallow` (see CartDrawer) — a bare subscription hands
- *  React a new snapshot each render and loops forever into a blank page. */
+let resolvedLinesSource: CartLine[] | undefined;
+let resolvedLinesCache: ResolvedLine[] = [];
+
+/** Catalog-joined lines; drops rows whose product vanished (safe CMS swaps). */
 export function selectResolvedLines(s: ShopState): ResolvedLine[] {
+  if (s.lines === resolvedLinesSource) return resolvedLinesCache;
+
   const out: ResolvedLine[] = [];
   for (const l of s.lines) {
     const p = getProduct(l.productId);
@@ -125,7 +127,9 @@ export function selectResolvedLines(s: ShopState): ResolvedLine[] {
       icon: p.icon,
     });
   }
-  return out;
+  resolvedLinesSource = s.lines;
+  resolvedLinesCache = out;
+  return resolvedLinesCache;
 }
 
 export function selectSubtotal(s: ShopState): number {
