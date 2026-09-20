@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactElement } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useShallow } from 'zustand/react/shallow';
 import { ArrowRight, ShoppingBasket, Trash2, X } from 'lucide-react';
 import { FREE_SHIPPING_AT, formatUSD } from '../data/products';
 import { selectCount, selectResolvedLines, selectSubtotal, useShop } from '../store/shop';
@@ -17,7 +18,9 @@ interface CartDrawerProps {
 export function CartDrawer({ onCheckout, onBrowse }: CartDrawerProps): ReactElement {
   const open = useShop((s) => s.drawerOpen);
   const setOpen = useShop((s) => s.setDrawerOpen);
-  const lines = useShop(selectResolvedLines);
+  // useShallow: the selector builds a fresh array, so compare by value —
+  // otherwise every snapshot differs and React re-renders forever.
+  const lines = useShop(useShallow(selectResolvedLines));
   const subtotal = useShop(selectSubtotal);
   const count = useShop(selectCount);
   const setQty = useShop((s) => s.setQty);

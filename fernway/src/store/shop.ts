@@ -105,8 +105,9 @@ export const useShop = create<ShopState>()(
 );
 
 /** Catalog-joined lines; drops rows whose product vanished (safe CMS swaps).
- *  Note: returns a fresh array, so subscribers re-render on any shop change —
- *  fine at catalog scale; reach for `useShallow` if you grow past it. */
+ *  IMPORTANT: this builds a fresh array on every call, so subscribers MUST
+ *  read it via `useShallow` (see CartDrawer) — a bare subscription hands
+ *  React a new snapshot each render and loops forever into a blank page. */
 export function selectResolvedLines(s: ShopState): ResolvedLine[] {
   const out: ResolvedLine[] = [];
   for (const l of s.lines) {

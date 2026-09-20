@@ -1,4 +1,5 @@
 import { useState, type FormEvent, type ReactElement, type ReactNode } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { ArrowLeft, ArrowRight, Check, CreditCard, Lock, MapPin, PackageCheck, ShoppingBasket } from 'lucide-react';
 import { FLAT_SHIPPING, FREE_SHIPPING_AT, formatUSD } from '../data/products';
 import { digitsOnly, hasErrors, mockOrderNumber, validatePayment, validateShipping, type ErrorMap, type PaymentFields, type ShippingFields } from '../lib/validation';
@@ -49,7 +50,9 @@ const INPUT =
 // insertion point (see the STRIPE comment in step 3). Every step functions
 // end-to-end so buyers can demo the whole funnel today.
 export function CheckoutFlow({ onBackToShop }: CheckoutFlowProps): ReactElement {
-  const lines = useShop(selectResolvedLines);
+  // useShallow: the selector builds a fresh array — compare by value so the
+  // component doesn't re-render in a loop (see CartDrawer).
+  const lines = useShop(useShallow(selectResolvedLines));
   const subtotal = useShop(selectSubtotal);
   const setQty = useShop((s) => s.setQty);
   const removeLine = useShop((s) => s.removeLine);
