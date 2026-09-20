@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Fernway — global layer.
+  Palette and tile artwork live in tailwind.config.js; this file holds only
+  focus rings, the drawer/toast motion guards, and small commerce details.
+*/
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  @apply bg-mist text-forest-ink font-sans antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.dark body,
+.dark {
+  background-color: #0c231c;
+}
+
+/* Visible keyboard focus everywhere — store buyers audit this. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid #e5a83b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.font-display {
+  letter-spacing: -0.015em;
+}
+
+::selection {
+  background: #e5a83b;
+  color: #14342b;
+}
+
+/* Thin styled scrollbar for the cart drawer item list. */
+.cart-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #2e7d4f transparent;
+}
+
+/* Commerce motion only; disabled for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
