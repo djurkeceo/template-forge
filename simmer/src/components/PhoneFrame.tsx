@@ -28,7 +28,7 @@ export function PhoneFrame({ screen, children, label }: PhoneFrameProps): ReactE
           <div aria-hidden="true" className="absolute left-1/2 top-2.5 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-char dark:bg-white/10">
             <span className="absolute right-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-white/15" />
           </div>
-          <div className="phone-scroll h-[560px] overflow-hidden sm:h-[600px]">
+          <div className="phone-scroll h-[560px] overflow-hidden sm:h-[600px] dark:ring-1 dark:ring-inset dark:ring-white/10">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={screen}
