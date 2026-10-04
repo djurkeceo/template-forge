@@ -45,7 +45,7 @@ export function Carousel(): ReactElement {
         aria-label="Simmer screenshots"
         className="relative mx-auto mt-10 max-w-md"
       >
-        <div className="overflow-hidden" aria-live="polite">
+        <div className="overflow-visible" aria-live="polite">
           <AnimatePresence mode="wait" custom={direction} initial={false}>
             <motion.div
               key={index}
@@ -62,7 +62,7 @@ export function Carousel(): ReactElement {
                 else if (info.offset.x > 60) go(index - 1, -1);
               }}
             >
-              <PhoneFrame screen={feature?.id ?? 'matches'} label={`Simmer screenshot ${index + 1} of ${total}: ${CAPTIONS[index] ?? ''}`}>
+              <PhoneFrame compact screen={feature?.id ?? 'matches'} label={`Simmer screenshot ${index + 1} of ${total}: ${CAPTIONS[index] ?? ''}`}>
                 <Screen />
               </PhoneFrame>
             </motion.div>

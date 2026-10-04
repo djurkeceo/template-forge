@@ -10,6 +10,7 @@
 
 :root {
   color-scheme: light dark;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -46,6 +47,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {

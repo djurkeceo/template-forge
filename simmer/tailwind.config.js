@@ -35,6 +35,7 @@ export default {
       boxShadow: {
         card: '0 0 0 1px #E0D5BE, 0 20px 44px -24px rgba(35, 32, 27, 0.35)',
         phone: '0 0 0 10px #171410, 0 0 0 12px #E0D5BE, 0 40px 80px -32px rgba(23, 20, 16, 0.55)',
+        'phone-dark': '0 0 0 10px #171410, 0 0 0 12px #4A4338, 0 40px 80px -32px rgba(0, 0, 0, 0.55)',
       },
       borderRadius: {
         card: '1.25rem',

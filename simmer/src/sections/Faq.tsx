@@ -1,5 +1,6 @@
 import { useState, type ReactElement } from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { FAQS } from '../lib/content';
 
 // Working accordion: one open at a time, native buttons with expanded
@@ -16,8 +17,12 @@ export function Faq(): ReactElement {
         {FAQS.map((f, i) => {
           const isOpen = open === i;
           return (
-            <li
+            <motion.li
               key={f.q}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.35, delay: i * 0.06, ease: 'easeOut' }}
               className={`overflow-hidden rounded-card border-2 transition-colors ${
                 isOpen ? 'border-char bg-white shadow-card dark:border-butter dark:bg-white/5' : 'border-crust bg-white/60 hover:border-char/40 dark:border-white/10 dark:bg-white/[0.02]'
               }`}
@@ -35,12 +40,23 @@ export function Faq(): ReactElement {
                   {isOpen ? <Minus size={15} aria-hidden="true" /> : <Plus size={15} aria-hidden="true" />}
                 </span>
               </button>
-              {isOpen && (
-                <div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-button-${i}`} className="px-5 pb-5">
-                  <p className="text-[15px] leading-relaxed text-char/70 dark:text-cream/70">{f.a}</p>
-                </div>
-              )}
-            </li>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-button-${i}`}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                    className="px-5 pb-5"
+                  >
+                    <p className="text-[15px] leading-relaxed text-char/70 dark:text-cream/70">{f.a}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
           );
         })}
       </ul>

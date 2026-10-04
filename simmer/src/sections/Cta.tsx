@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { BellRing, CheckCircle2, Send, XCircle } from 'lucide-react';
+import { motion } from 'motion/react';
 import { emailError } from '../lib/validation';
 import { StoreBadges } from '../components/StoreBadges';
 
@@ -21,7 +22,13 @@ export function Cta(): ReactElement {
 
   return (
     <section id="download" aria-labelledby="cta-title" className="mx-auto max-w-6xl scroll-mt-20 px-5 pb-20">
-      <div className="relative overflow-hidden rounded-card bg-char px-6 py-12 text-cream sm:px-12 dark:bg-paprika-deep">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="relative overflow-hidden rounded-card bg-char px-6 py-12 text-cream sm:px-12 dark:bg-paprika-deep"
+      >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -right-16 -top-20 h-64 w-64 rounded-full bg-paprika/40 blur-3xl" />
           <div className="absolute -bottom-24 -left-12 h-56 w-56 rounded-full bg-butter/20 blur-3xl" />
@@ -101,7 +108,7 @@ export function Cta(): ReactElement {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
